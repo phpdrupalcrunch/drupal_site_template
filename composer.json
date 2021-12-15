@@ -1,0 +1,125 @@
+{
+    "name": "phpdrupalcrunch/drupal_site_template",
+    "description": "Project template for Drupal 9 <drupal_site> site with Composer.",
+    "homepage": "https://<drupal_site>.local",
+    "license": "GPL-2.0-or-later",
+    "type": "project",
+    "authors": [
+        {
+            "name": "DW",
+            "role": "Drupal Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer", 
+            "url": "https://repo.packagist.com/phpdrupalcrunch/"
+        },
+        {
+            "packagist.org": false
+        }
+    ],
+    "require": {
+        "composer/installers": "^1.9",
+        "davidbarratt/custom-installer": "1.1.0",
+        "cweagans/composer-patches": "^1.7.0",
+        "webmozart/path-util": "^2.3",
+        "drupal-composer/drupal-paranoia": "^1.1.0",
+        "phpdrupalcrunch/drupal_site_platform": "^1.0.0",
+        "vlucas/phpdotenv": "^5.1",
+        "webflo/drupal-finder": "^1.2"
+    },
+    "require-dev": {
+        "drupal/core-dev": "^9",
+        "zaporylie/composer-drupal-optimizations": "^1.2",
+        "phpunit/php-code-coverage": "^7"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "discard-changes": true,
+        "sort-packages": true,
+        "platform": {
+            "php": "7.4.7"
+        }
+    },
+    "autoload": {
+        "classmap": [
+            "scripts/composer/ScriptHandler.php"
+        ],
+        "files": ["load.environment.php"]
+    },
+    "scripts": {
+        "pre-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "pre-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "post-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "post-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ]
+    },
+    "extra": {
+        "_readme": [
+            "Project template for Drupal 9 <drupal_site> site with Composer"
+        ],
+        "template": {
+            "package": "phpdrupalcrunch/drupal_site_template",
+            "version": "1.0.0-beta1"
+        },
+        "drupal-scaffold": {
+            "locations": {
+                "web-root": "./app"
+            },
+            "file-mapping": {
+                "[web-root]/robots.txt": false
+            }
+        },
+        "installer-paths": {
+            "app/core": ["type:drupal-core"],
+            "app/libraries/{$name}": ["type:drupal-library"],
+            "app/modules/contrib/{$name}": ["type:drupal-module"],
+            "app/profiles/contrib/{$name}": ["type:drupal-profile"],
+            "app/themes/contrib/{$name}": ["type:drupal-theme"],
+            "drush/Commands/contrib/{$name}": ["type:drupal-drush"]
+        },
+        "custom-installer": {
+            "phpdrupalcrunch-profile": "app/profiles/{$name}",
+            "phpdrupalcrunch-module": "app/modules/phpdrupalcrunch/{$name}",
+            "phpdrupalcrunch-theme": "app/themes/phpdrupalcrunch/{$name}"
+        },
+        "enable-patching": true,
+        "composer-exit-on-patch-failure": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
+        },
+        "drupal-paranoia": {
+            "app-dir": "app",
+            "web-dir": "docroot",
+            "excludes": [
+                "core/install.php",
+                "core/modules/statistics/statistics.php",
+                "public-files"
+            ],
+            "asset-files": [
+               "*.webmanifest"
+            ]
+        },
+        "patches": {
+        },
+        "merge-yaml": {
+            "locations": [
+                "app/profiles",
+                "app/modules",
+                "vendor/phpdrupalcrunch/drupal_site_platform"
+            ]
+        }
+    }
+}
